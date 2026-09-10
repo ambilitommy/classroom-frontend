@@ -13,15 +13,6 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
 :root {
   --background: oklch(1.0000 0 0);
   --foreground: oklch(0.2851 0.0500 267.2279);
@@ -181,4 +172,169 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+}
+
+@layer components {
+   .page-title {
+    @apply text-3xl font-bold text-foreground tracking-tight;
+  }
+
+  .column-title {
+    @apply flex items-center gap-1 font-bold;
+  }
+
+  .search-field {
+    @apply relative w-full max-h-9 md:max-w-72;
+    
+    .search-icon {
+      @apply absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary;
+    }
+  }
+  .sign-up{
+    .logo {
+      @apply flex items-center justify-center;
+      img {
+        @apply h-12 w-12;
+      }
+    }
+
+    .card {
+      @apply w-full max-w-xl p-12 mt-6;
+    }
+
+    .header{
+      @apply px-0;
+    }
+    .title{
+      @apply text-3xl font-semibold;
+    }
+
+    .description {
+      @apply text-muted-foreground;
+    }
+
+    .content {
+      @apply px-0;
+    }
+  }
+  .intro-row{
+    @apply flex flex-col gap-5 lg:flex-row justify-between space-y-4;
+  }
+  .class-view {
+    @apply container mx-auto pb-8 px-2 sm:px-4;
+  }
+  .class-form-card{
+    @apply max-w-3xl gap-2 w-full mx-auto relative overflow-hidden border shadow-sm border-background/20;
+  }
+ 
+
+  .upload-dropzone {
+    @apply flex flex-col items-center justify-center gap-4 min-h-40 border-2 border-dashed border-foreground/20 bg-primary/5 w-full mt-3 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed rounded-md;
+    .upload-prompt {
+      @apply flex flex-col sm:flex-row items-center justify-center gap-4 p-5;
+      div {
+        @apply text-xs text-foreground/60;
+      }
+    }
+  }
+
+  .upload-preview {
+    img {
+      @apply size-full object-cover rounded-md;
+    }
+    button {
+      @apply absolute top-2 right-3 z-10 cursor-pointer;
+    }
+  }
+
+  .class-show {
+    .state-message {
+      @apply mt-6 text-sm text-muted-foreground;
+    }
+    .state-message.is-error {
+      @apply text-destructive;
+    }
+    .banner {
+      @apply mt-5 mb-1;
+
+      img {
+        @apply w-full aspect-5/1 rounded-xl object-cover shadow-md;
+      }
+    }
+    .details-card {
+      @apply p-6 sm:p-8 space-y-3 shadow-md;
+    }
+    .details-header{
+      > div:first-child {
+        @apply flex-1 space-y-2;
+        h1 {
+          @apply text-xl sm:text-2xl font-bold;
+        }
+        p {
+          @apply text-sm text-muted-foreground;
+        }
+      }
+      > div:last-child {
+        @apply space-x-2;
+
+        > * {
+          @apply px-3 py-1;
+        }
+        [data-status="active"]{
+          @apply bg-green-600 text-white;
+        }
+        [data-status="inactive"] {
+          @apply bg-gray-600 text-white;
+        }
+      }
+    }
+    .details-grid {
+      @apply grid sm:grid-cols-2 mt-8 gap-10 text-sm;
+    }
+    .instructor {
+      @apply space-y-2;
+      > p {
+        @apply text-xs mb-3 font-bold text-gray-400 uppercase tracking-wider;
+      }
+      > div {
+        @apply space-y-2 flex items-center gap-2;
+      }
+      img {
+        @apply size-13 rounded-full object-cover;
+      }
+      > div > div > p:first-child {
+        @apply text-base font-mono font-bold text-primary;
+      }
+      >div >div >p:last-child {
+        @apply text-sm font-medium mb-2;
+      }
+    }
+    .department {
+      > div {
+        @apply space-y-2;
+        p:first-child {
+          @apply text-lg font-bold text-primary;
+        }
+        p:last-child {
+          @apply text-sm text-muted-foreground line-clamp-1;
+        }
+      }
+    }
+    .subject {
+      > div {
+        p:last-of-type {
+          @apply text-sm text-muted-foreground mt-2 leading-relaxed;
+        }
+      }
+    }
+    .join {
+      @apply space-y-2;
+      h2 {
+        @apply text-xs font-bold text-muted-foreground uppercase tracking-wider;
+      }
+      ol {
+        @apply text-sm text-muted-foreground space-y-1.5 list-decimal list-inside mt-2;
+      }
+    }
+  }
 }

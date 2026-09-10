@@ -1,4 +1,4 @@
 const SubjectsCreate = ()=>{
-    return <div>Subjects</div>
+    return <div>Create</div>
 }
 export default SubjectsCreate;
