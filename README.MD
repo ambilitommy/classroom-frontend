@@ -17,6 +17,21 @@ Refine's hooks and components simplifies the development process and eliminates 
 
 ## Available Scripts
 
+## Backend Setup
+
+From `classroom-backend`, copy `.env.example` to `.env` and set the database connection string. Keep the frontend origin configured for local development:
+
+```env
+FRONTEND_URL="http://localhost:5173"
+```
+
+The backend requires `FRONTEND_URL` to configure CORS, so define it before running either backend command:
+
+```bash
+npm run dev
+npm run start
+```
+
 ### Running the development server.
 
 ```bash
