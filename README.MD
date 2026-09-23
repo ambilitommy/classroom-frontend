@@ -17,6 +17,31 @@ Refine's hooks and components simplifies the development process and eliminates 
 
 ## Available Scripts
 
+## Frontend Setup
+
+From `classroom-frontend`, create a `.env` file and set the local backend origin used by Vite:
+
+```env
+VITE_BACKEND_BASE_URL="http://localhost:8000/api/"
+```
+
+This value must match the URL exposed by `classroom-backend`. Without it, frontend initialization throws `Missing environment variable: VITE_BACKEND_BASE_URL`.
+
+## Backend Setup
+
+From `classroom-backend`, copy `.env.example` to `.env` and set the database connection string. Keep the frontend origin configured for local development:
+
+```env
+FRONTEND_URL="http://localhost:5173"
+```
+
+The backend requires `FRONTEND_URL` to configure CORS, so define it before running either backend command:
+
+```bash
+npm run dev
+npm run start
+```
+
 ### Running the development server.
 
 ```bash

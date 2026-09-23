@@ -5,7 +5,7 @@ import { ListView } from "@/components/refine-ui/views/list-view";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DEPARTMENT_OPTIONS, DEPARTMENTS } from "@/constants";
+import { DEPARTMENT_OPTIONS } from "@/constants";
 import { Subject } from "@/types";
 import { useTable } from "@refinedev/react-table";
 import { ColumnDef } from "@tanstack/react-table";
@@ -41,7 +41,7 @@ const SubjectsList = () => {
             },
             {
                 id: 'department',
-                accessorKey: 'department',
+                accessorKey: 'department.name',
                 size: 150,
                 header: () => <p className="column-title" >Department</p>,
                 cell: ({ getValue }) => <Badge variant="secondary" className="text-foreground">{getValue<string>()}</Badge>
@@ -68,6 +68,16 @@ const SubjectsList = () => {
         }
     });
 
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
+        subjectTable.refineCore.setCurrentPage(1); // Reset to first page on search
+    }
+
+    const handleDepartmentChange = (value: string) => {
+        setSelectedDepartment(value);
+        subjectTable.refineCore.setCurrentPage(1); // Reset to first page on department change
+    }
+
     return (
         <ListView>
             <Breadcrumb />
@@ -77,11 +87,11 @@ const SubjectsList = () => {
                 <div className="actions-row">
                     <div className="search-field mb-4">
                         <Search className="search-icon" />
-                        <Input type="text" placeholder="Search by name ..." className="pl-10 w-full" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                        <Input type="text" placeholder="Search by name ..." className="pl-10 w-full" value={searchQuery} onChange={handleSearchChange} />
                     </div>
 
                     <div className="flex gap-2 w-full sm:w-auto">
-                        <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+                        <Select value={selectedDepartment} onValueChange={handleDepartmentChange}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Filter by department" />
                             </SelectTrigger>
