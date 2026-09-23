@@ -1,10 +1,12 @@
 export type Subject = {
     id: number;
+    departmentId: number;
     name: string;
     code: string;
-    description: string;
-    department: string;
-    createdAt?: string;
+    description: string | null;
+    department: Department;
+    createdAt: string;
+    updatedAt: string;
 };
 
 export type ListResponse<T = unknown> = {
@@ -91,8 +93,11 @@ export type Schedule = {
 
 export type Department = {
     id: number;
+    code: string;
     name: string;
-    description: string;
+    description: string | null;
+    createdAt: string;
+    updatedAt: string;
 };
 
 export type ClassDetails = {

@@ -23,6 +23,11 @@ import { mockSubjects } from "@/constants/mock-data";
 import { BACKEND_BASE_URL } from "@/constants";
 import { ListResponse } from "@/types";
 import { CreateDataProviderOptions, createDataProvider } from "@refinedev/rest";
+
+if(!BACKEND_BASE_URL) {
+  throw new Error('BACKEND_BASE_URL is not defined in .env file');
+}
+
 const options: CreateDataProviderOptions = {
   getList: {
     getEndpoint: ({ resource }) => resource,
@@ -41,10 +46,32 @@ const options: CreateDataProviderOptions = {
       return params;
     },
     mapResponse: async (response) => {
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        const error = new Error(
+          typeof body?.message === 'string'
+            ? body.message
+            : `Request failed with status ${response.status}`,
+        ) as Error & { statusCode?: number };
+        error.statusCode = response.status;
+        throw error;
+      }
+
       const payload: ListResponse = await response.json();
       return payload.data ?? [];
     },
     getTotalCount: async (response) => {
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        const error = new Error(
+          typeof body?.message === 'string'
+            ? body.message
+            : `Request failed with status ${response.status}`,
+        ) as Error & { statusCode?: number };
+        error.statusCode = response.status;
+        throw error;
+      }
+
       const payload: ListResponse = await response.json();
       return payload.pagination?.totalCount ?? 0;
     }
