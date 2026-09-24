@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DEPARTMENT_OPTIONS } from "@/constants";
-import { Subject } from "@/types";
+import { Department, Subject } from "@/types";
+import { useList } from "@refinedev/core";
 import { useTable } from "@refinedev/react-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { Search } from "lucide-react";
@@ -21,6 +22,12 @@ const SubjectsList = () => {
     const searchFilters = searchQuery ? [{
         field: 'name', operator: 'contains' as const, value: searchQuery
     }] : [];
+
+    // For departments filter options
+    const {result} = useList<Department>({
+        resource: 'departments',
+    });
+    const departments = result?.data ?? [];
 
     const subjectTable = useTable<Subject>({
         columns: useMemo<ColumnDef<Subject>[]>(() => [
@@ -97,9 +104,9 @@ const SubjectsList = () => {
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="all"> All Departments</SelectItem>
-                                {DEPARTMENT_OPTIONS.map(department => (
-                                    <SelectItem key={department.value} value={department.value}>{department.label}</SelectItem>
-                                ))}
+                                {departments.map(department => (
+                                    <SelectItem key={department.id} value={department.name}>{department.name}</SelectItem>
+                                ))} 
                             </SelectContent>
                         </Select>
                         <CreateButton />
