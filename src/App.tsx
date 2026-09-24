@@ -24,6 +24,8 @@ import Dashboard from "./pages/dashboard";
 import { BookOpen, Home } from "lucide-react";
 import SubjectsList from "./pages/subjects/list";
 import SubjectsCreate from "./pages/subjects/create";
+import DepartmentsList from "./pages/departments/list";
+import DepartmentViewPage from "./pages/departments/view";
 
 function App() {
   return (
@@ -42,6 +44,7 @@ function App() {
               }}
               resources={[
                 { name: 'dashboard', list: '/', meta: { label: 'Home', icon: <Home /> } },
+                { name: 'departments', list: '/departments', create: '/departments/create', show: '/departments/:id', meta: { label: 'Departments', icon: <BookOpen /> } },
                 { name: 'subjects', list: '/subjects', create: '/subjects/create', meta: { label: 'Subjects', icon: <BookOpen /> } },
               ]}
             >
@@ -50,9 +53,13 @@ function App() {
                   <Layout><Outlet /></Layout>
                 }>
                   <Route path="/" element={<Dashboard />} />
+                  <Route path="departments">
+                    <Route index element={<DepartmentsList />} />
+                    <Route path=":id" element={<DepartmentViewPage />} />
+                  </Route>
                   <Route path="subjects">
-                    <Route index element={<SubjectsList />}/>
-                    <Route index element={<SubjectsCreate />}/>
+                    <Route index element={<SubjectsList />} />
+                    <Route index element={<SubjectsCreate />} />
                   </Route>
                 </Route>
               </Routes>

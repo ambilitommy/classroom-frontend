@@ -95,6 +95,7 @@ export type Department = {
     id: number;
     code: string;
     name: string;
+    subjectsCount: number;
     description: string | null;
     createdAt: string;
     updatedAt: string;
