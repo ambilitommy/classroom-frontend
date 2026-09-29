@@ -1,12 +1,11 @@
-import {CreateView} from "@/components/refine-ui/views/create-view.tsx";
-import {Breadcrumb} from "@/components/refine-ui/layout/breadcrumb.tsx";
-import {Button} from "@/components/ui/button.tsx";
-import {useBack} from "@refinedev/core";
-import {Separator} from "@/components/ui/separator.tsx";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx"
+import { CreateView } from "@/components/refine-ui/views/create-view.tsx";
+import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { useBack } from "@refinedev/core";
+import { Separator } from "@/components/ui/separator.tsx";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.tsx"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import {classSchema} from "@/lib/schema.ts";
+import { classSchema } from "@/lib/schema.ts";
 import * as z from "zod";
 
 import {
@@ -19,11 +18,12 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {Label} from "@/components/ui/label.tsx";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
-import {Textarea} from "@/components/ui/textarea.tsx";
-import {Loader2} from "lucide-react";
+import { Label } from "@/components/ui/label.tsx";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
+import { Textarea } from "@/components/ui/textarea.tsx";
+import { Loader2 } from "lucide-react";
 import UploadWidget from "@/components/upload-widget";
+import { useForm } from "@refinedev/react-hook-form";
 
 
 const Create = () => {
@@ -77,10 +77,10 @@ const Create = () => {
 
     const bannerPublicId = form.watch('bannerCldPubId');
 
-    const setBannerImage = (file,field) => {
-        if(file){
+    const setBannerImage = (file : any, field : any) => {
+        if (file) {
             field.onChange(file.url)
-            form.setValue('bannerCldPubId', 'file.publicId', {
+            form.setValue('bannerCldPubId', file.publicId, {
                 shouldValidate: true,
                 shouldDirty: true
             })
@@ -118,18 +118,18 @@ const Create = () => {
                     <CardContent className="mt-7">
                         <Form {...form}>
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-                                <FormField control={control} name="bannerUrl" render={({field})=> (
+                                <FormField control={control} name="bannerUrl" render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Banner Image</FormLabel> <span className="text-orange-600">*</span>
                                         <FormControl>
-                                            <UploadWidget value={field.value ? {url: field.value, publicId: bannerPublicId ?? ''} : null} onChange={(file: any,field: any)=>setBannerImage(file,field)} />
+                                            <UploadWidget value={field.value ? { url: field.value, publicId: bannerPublicId ?? '' } : null} onChange={(file: any) => setBannerImage(file, field)} />
                                         </FormControl>
                                         <FormMessage />
                                         {errors.bannerCldPubId && !errors.bannerUrl && (
                                             <p className="text-destructive text-sm">{errors?.bannerCldPubId?.message?.toString()}</p>
                                         )}
                                     </FormItem>
-                                )}/>
+                                )} />
 
                                 <FormField
                                     control={control}

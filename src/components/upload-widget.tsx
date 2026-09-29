@@ -1,6 +1,7 @@
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from "@/constants";
 import { UploadWidgetProps, UploadWidgetValue } from "@/types";
-import { Upload, UploadCloud } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { UploadCloud } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const UploadWidget = ({ value = null, onChange, disabled = false }: UploadWidgetProps) => {
@@ -64,6 +65,9 @@ const UploadWidget = ({ value = null, onChange, disabled = false }: UploadWidget
             {preview ? (
                 <div className="upload-preview">
                     <img src={preview.url} alt="Uploaded file" />
+                    <Button type="button" variant="outline" onClick={openWidget} disabled={disabled}>
+                        Replace image
+                    </Button>
                 </div>
             ) : <div className="upload-dropzone" role="button" tabIndex={0} onClick={openWidget} onKeyDown={(event) => {
                 if (event.key === 'Enter') {
