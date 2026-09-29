@@ -24,8 +24,22 @@ import { BACKEND_BASE_URL } from "@/constants";
 import { ListResponse } from "@/types";
 import { CreateDataProviderOptions, createDataProvider } from "@refinedev/rest";
 
-if(!BACKEND_BASE_URL) {
+if (!BACKEND_BASE_URL) {
   throw new Error('BACKEND_BASE_URL is not defined in .env file');
+}
+
+const buildHttpError = async (res: Response) => {
+  let message = 'Request failed.';
+  try {
+    const payload = (await res.json()) as { message?: string }
+    if (payload?.message) message = payload.message;
+  } catch {
+
+  }
+  return {
+    message,
+    statusCode: res.status
+  }
 }
 
 const options: CreateDataProviderOptions = {
@@ -47,14 +61,7 @@ const options: CreateDataProviderOptions = {
     },
     mapResponse: async (response) => {
       if (!response.ok) {
-        const body = await response.json().catch(() => ({}));
-        const error = new Error(
-          typeof body?.message === 'string'
-            ? body.message
-            : `Request failed with status ${response.status}`,
-        ) as Error & { statusCode?: number };
-        error.statusCode = response.status;
-        throw error;
+        throw await buildHttpError(response);
       }
 
       const payload: ListResponse = await response.json();
