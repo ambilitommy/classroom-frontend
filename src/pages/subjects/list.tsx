@@ -5,7 +5,6 @@ import { ListView } from "@/components/refine-ui/views/list-view";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DEPARTMENT_OPTIONS } from "@/constants";
 import { Department, Subject } from "@/types";
 import { useList } from "@refinedev/core";
 import { useTable } from "@refinedev/react-table";
@@ -24,8 +23,12 @@ const SubjectsList = () => {
     }] : [];
 
     // For departments filter options
-    const {result} = useList<Department>({
+    const { result } = useList<Department>({
         resource: 'departments',
+        pagination: {
+            currentPage: 1,
+            pageSize: 100,
+        },
     });
     const departments = result?.data ?? [];
 
